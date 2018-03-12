@@ -49,13 +49,14 @@ fn main() {
         if matches.is_present("COMMAND") {
             match matches.value_of("COMMAND").unwrap() {
                 "n" => new(text, &mut data),
+                "c" => complete(text, &mut data),
                 _ => (),
             }
         }
     } else {
     }
 
-    write_list(&data);
+    write_list(&data).unwrap();
     print_list(&data);
 }
 
@@ -64,9 +65,14 @@ fn new(text: &str, data: &mut Data) {
     println!("Added: {}", text);
 }
 
+fn complete(text: &str, data: &mut Data) {
+    let index: usize = text.parse().unwrap();
+    data.entries.remove(index);
+}
+
 fn print_list(data: &Data) {
-    for entry in data.entries.iter() {
-        println!("{}", entry);
+    for (index, entry) in data.entries.iter().enumerate() {
+        println!("{}: {}", index, entry);
     }
 }
 
