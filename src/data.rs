@@ -1,8 +1,10 @@
 extern crate serde;
 extern crate serde_json;
 
+use std::env;
 use std::fmt;
 use std::fs::File;
+use std::path::PathBuf;
 
 #[derive(Serialize, Deserialize)]
 pub struct Data {
@@ -30,7 +32,8 @@ impl Data {
     }
 
     pub fn save(&self) {
-        let file = File::create("list.json").unwrap();
+        let filename = get_filename();
+        let file = File::create(filename).unwrap();
         serde_json::to_writer(file, &self).unwrap();
     }
 }
@@ -42,7 +45,13 @@ impl fmt::Display for Entry {
 }
 
 pub fn load_list() -> Data {
-    let file = File::open("list.json").unwrap();
+
+    let filename = get_filename();
+
+    let file = match File::open(&filename) {
+        Ok(u) => u,
+        Err(_) => File::create(&filename).unwrap(),
+    };
     let u = serde_json::from_reader(file);
 
     let data = match u {
@@ -50,4 +59,11 @@ pub fn load_list() -> Data {
         Err(_) => Data{ entries: Vec::new() },
     };
     return data;
+}
+
+fn get_filename() -> PathBuf {
+    let mut filename = env::home_dir().unwrap();
+    filename.push(".bullet");
+    filename.push("data");
+    return filename
 }
