@@ -16,16 +16,17 @@ pub struct Entry {
 }
 
 impl Data {
-    pub fn new(&mut self, text: &str) {
-        self.entries.push(Entry { text: String::from(text) });
+    pub fn new(&mut self, text: String) {
+        self.entries.push(Entry { text: text });
     }
 
-    pub fn complete(&mut self, text: &str) {
+    pub fn complete(&mut self, text: String) {
         let index: usize = text.parse().unwrap();
         self.entries.remove(index);
     }
 
     pub fn print(&self) {
+        println!("Bullet TODO");
         for (index, entry) in self.entries.iter().enumerate() {
             println!("{}: {}", index, entry);
         }
