@@ -26,7 +26,6 @@ impl Data {
     }
 
     pub fn print(&self) {
-        println!("Bullet TODO");
         for (index, entry) in self.entries.iter().enumerate() {
             println!("{}: {}", index, entry);
         }

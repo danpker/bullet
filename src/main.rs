@@ -1,7 +1,9 @@
 extern crate clap;
 #[macro_use] extern crate serde_derive;
+extern crate chrono;
 
 use clap::{Arg, App};
+use chrono::prelude::*;
 
 mod data;
 
@@ -36,6 +38,8 @@ fn main() {
     }
 
     data.save();
+    let local: DateTime<Local> = Local::now();
+    println!("Bullet TODO {}", local.format("%Y-%m-%d").to_string());
     data.print();
 }
 
