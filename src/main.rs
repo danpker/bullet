@@ -29,7 +29,8 @@ fn main() {
         let text = text_list.join(" ");
 
         if matches.is_present("COMMAND") {
-            match matches.value_of("COMMAND").unwrap() {
+            let command = matches.value_of("COMMAND").unwrap();
+            match command {
                 "n" => data.new(text),
                 "c" => data.complete(text),
                 _ => (),

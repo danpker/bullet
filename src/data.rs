@@ -1,7 +1,7 @@
 extern crate serde;
 extern crate serde_json;
+extern crate dirs;
 
-use std::env;
 use std::fmt;
 use std::fs::File;
 use std::path::PathBuf;
@@ -62,8 +62,7 @@ pub fn load_list() -> Data {
 }
 
 fn get_filename() -> PathBuf {
-    let mut filename = env::home_dir().unwrap();
-    filename.push(".bullet");
-    filename.push("data");
+    let mut filename = dirs::config_dir().unwrap();
+    filename.push("bullet");
     return filename
 }
