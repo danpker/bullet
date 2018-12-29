@@ -1,6 +1,6 @@
+extern crate dirs;
 extern crate serde;
 extern crate serde_json;
-extern crate dirs;
 
 use std::fmt;
 use std::fs::File;
@@ -45,7 +45,6 @@ impl fmt::Display for Entry {
 }
 
 pub fn load_list() -> Data {
-
     let filename = get_filename();
 
     let file = match File::open(&filename) {
@@ -56,7 +55,9 @@ pub fn load_list() -> Data {
 
     let data = match u {
         Ok(u) => u,
-        Err(_) => Data{ entries: Vec::new() },
+        Err(_) => Data {
+            entries: Vec::new(),
+        },
     };
     return data;
 }
@@ -64,5 +65,5 @@ pub fn load_list() -> Data {
 fn get_filename() -> PathBuf {
     let mut filename = dirs::config_dir().unwrap();
     filename.push("bullet");
-    return filename
+    return filename;
 }
